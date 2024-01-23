@@ -1,0 +1,14 @@
+version: "3"
+services:
+  api:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./
+    volumes:
+      - ./:/usr/app
+      - /usr/app/node_modules
+    env_file:
+      - ./.env
+    ports:
+      - "3000:3000"
+    entrypoint: ./entry-point.sh
