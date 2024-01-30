@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { generateFunctionWithLanguage } from "./generateCodeChain.js";
 import { generateTestForCodeWithLanguage } from "./generateTestForCodeChain.js";
+import { generateCodeWithTests } from "./generateCodeAndTestChains.js";
 
 dotenv.config();
 
@@ -23,4 +24,9 @@ app.post("/generate-code", async (req, res, next) => {
     code: codeGenerated.code,
     test: testGenerated.test,
   });
+});
+
+app.post("/generate-code-with-tests", async (req, res, next) => {
+  const codeGenerated = await generateCodeWithTests(req.body);
+  res.status(200).send(codeGenerated);
 });
