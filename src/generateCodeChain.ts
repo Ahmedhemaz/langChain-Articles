@@ -6,14 +6,14 @@ export interface GenerateFunctionWithLanguage {
   language: string;
   task: string;
 }
+const openAi = new OpenAI({
+  openAIApiKey: process.env.OPENAI_KEY,
+});
+
 export const generateFunctionWithLanguage = async (params: GenerateFunctionWithLanguage) => {
   const codePrompt = new PromptTemplate({
     template: "Write a very short {language} function that will {task}",
     inputVariables: ["language", "task"],
-  });
-
-  const openAi = new OpenAI({
-    openAIApiKey: process.env.OPENAI_KEY,
   });
 
   const llm = new LLMChain({

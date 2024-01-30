@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import { generateFunctionWithLanguage } from "./generateCodeChain.js";
+import { generateTestForCodeWithLanguage } from "./generateTestForCodeChain.js";
 
 dotenv.config();
 
@@ -14,8 +15,12 @@ app.listen(port, () => {
 
 app.post("/generate-code", async (req, res, next) => {
   const codeGenerated = await generateFunctionWithLanguage(req.body);
-
+  const testGenerated = await generateTestForCodeWithLanguage({
+    language: req.body.language,
+    code: codeGenerated.code,
+  });
   res.status(200).send({
     code: codeGenerated.code,
+    test: testGenerated.test,
   });
 });
