@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { generateFunctionWithLanguage } from "./generateCodeChain.js";
+import { generateChatBotMessageWithMemoryBuffer } from "./chatMemoryBuffer.js";
 
 dotenv.config();
 
@@ -12,10 +12,9 @@ app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
 
-app.post("/generate-code", async (req, res, next) => {
-  const codeGenerated = await generateFunctionWithLanguage(req.body);
-
+app.post("/chat-with-memory-buffer", async (req, res) => {
+  const generatedMessage = await generateChatBotMessageWithMemoryBuffer(req.body);
   res.status(200).send({
-    code: codeGenerated.code,
+    message: generatedMessage,
   });
 });
