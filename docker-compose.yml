@@ -12,3 +12,14 @@ services:
     ports:
       - "3000:3000"
     entrypoint: ./entry-point.sh
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  db:
+    image: chromadb/chroma
+    ports:
+      - 8000:8000
+    volumes:
+      - chroma-data:/chroma/chroma
+volumes:
+  chroma-data:
+    driver: local
