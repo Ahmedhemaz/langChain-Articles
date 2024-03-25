@@ -12,3 +12,20 @@ services:
     ports:
       - "3000:3000"
     entrypoint: ./entry-point.sh
+  lc-postgres:
+    image: postgres
+    container_name: "lc-postgres"
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresdata:/var/lib/postgresql/data
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+volumes:
+  postgresdata: {}
